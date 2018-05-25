@@ -1,0 +1,6 @@
+#!/bin/sh
+date=`date "+%Y%m%d_%H%M%S"`
+adb shell /system/bin/screencap -p /sdcard/screenshot.png
+mkdir -p ~/screenshot
+adb pull /sdcard/screenshot.png ~/screenshot/screenshot_$date.png
+open ~/screenshot/screenshot_$date.png
