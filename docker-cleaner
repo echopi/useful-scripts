@@ -1,0 +1,7 @@
+#!/bin/bash
+
+c=$(docker ps -q -f status=exited); 
+[ "$c" != ""  ] && docker rm $c
+
+i=$(docker images | grep "^<none>" | awk '{print $3}')
+[ "$i" != ""  ] && docker rmi $(docker images | grep "^<none>" | awk '{print $3}')
