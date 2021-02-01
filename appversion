@@ -1,0 +1,23 @@
+#!/bin/bash
+
+serial=""
+adb_cmd="adb"
+package=""
+
+
+while getopts "hs:p:" opt; do
+  case $opt in
+    h)
+      echo "$0 -p \$package -s \$serial"
+      exit 0
+      ;;
+    s)
+      serial=$OPTARG
+      adb_cmd="adb -s $serial"
+      ;;
+    p)
+      package=$OPTARG
+  esac
+done
+
+$adb_cmd shell dumpsys package $package | grep versionName | cut -d= -f2

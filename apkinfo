@@ -1,0 +1,27 @@
+#!/bin/bash
+
+cmd='aapt'
+apk=$1
+
+while getopts "h" opt; do
+  case $opt in
+    h)
+      echo "$0 \$apk"
+      exit 0
+      ;;
+  esac
+done
+
+# if [[ $apk == .* ]];then
+#   apk="$(pwd)/$apk"
+#   echo $apk
+# fi
+
+
+package=`$cmd dump badging $apk | grep -o "package: name='[^']*" | cut -d \' -f 2`
+version=`$cmd dump badging $apk | grep -o "versionName='[^']*" | cut -d \' -f 2`
+activity=`$cmd dump badging $apk | grep -o "launchable-activity: name='[^']*" | cut -d \' -f 2`
+
+echo "package:$package"
+echo "activity:$activity"
+echo "version:$version"
